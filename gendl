@@ -54,7 +54,7 @@ function download_stdout
 			output="$(curl $url)"
 			;;
 		"wget")
-			output="$(wget --quiet -O $url)"
+			output="$(wget --quiet -O- $url)"
 			;;
 	esac
 
