@@ -1,0 +1,62 @@
+#!/bin/sh
+########################################
+# name: wydir
+# desc: run `wyrics` over every song in
+#       a directory of given file-ext
+# main: Jenga Phoenix
+#       <jadedctrl@teknik.io>
+# lisc: CC 0
+########################################
+
+
+# STRING STRING --> STRING
+# Return a version of a filename suitable for making a
+# query. Replace "_" with spaces, get rid of file-ext.
+function query_name {
+	filename="$1"
+	suffix="$2"
+
+	basename "$filename" ".$suffix" \
+	| sed 's/_/ /g'
+}
+
+# STRING --> STRING
+# Return the name of a file's lyrics text-file.
+# Will be the full-name + .txt
+function text_name {
+	filename="$1"
+
+	echo "${filename}.txt"
+}
+
+
+
+# --------------------------------------
+# invocation
+
+function usage {
+	echo "usage: wydir file-ext [prefix]"
+	echo "       'file-ext' should be the ext to songs in this dir"
+	echo "       'prefix'   should be a prefix (I.E., band-name) to"
+	echo "                  help make search-results more accurate."
+
+	exit 2
+}
+
+# --------------------------------------
+
+SUFFIX="$1"
+PREFIX="$2"
+
+if test -z "$SUFFIX"; then
+	usage
+fi
+
+for file in $(ls *.$1); do
+	echo "... $file ..."
+	lyrics="$(wyrics -s "$PREFIX $(query_name "$file" "$SUFFIX")")"
+
+	if test -n "$lyrics"; then
+		echo "$lyrics" > "$(text_name "$file")"
+	fi
+done
