@@ -9,6 +9,7 @@
 # lisc: CC 0
 ########################################
 
+ARGUMENTS='--vo null --term-osd-bar'
 trap "" 2
 
 
@@ -115,8 +116,8 @@ while test -n "$ITEMS"; do
 	local item="$(car "$ITEMS")"
 
 	cat "${item}.txt" 2> /dev/null
-	echo "===$(discarded_items)/$(total_items)==="
-	mpv "$item"
+	echo "===$(add $(discarded_items) 1)/$(total_items)==="
+	eval "mpv ${ARGUMENTS} ${item}"
 
 	return=$?
 	handle_return "$return"

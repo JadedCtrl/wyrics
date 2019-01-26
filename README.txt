@@ -101,4 +101,4 @@ BORING STUFF
 ----------------------------------------
 License is CC-0 (though, "gendl" is GPLv3)
 Author is Jenga Phoenix <jadedctrl@teknik.io>
-Sauce is at https://git.eunichx.us/wyrics
+Sauce is at https://git.eunichx.us/wyrics.git
