@@ -92,8 +92,8 @@ function search_parse {
 				| sed 's/.*href=\"//' \
 				| sed 's/\" class.*//')"
 		local title="$(echo "$line" \
-				| sed 's%.*\" >%%' \
-				| sed 's%</a>.*%%')"
+				| sed 's%.*">%%' \
+				| sed 's%</a>%%')"
 
 		if echo "$title" | grep "http" > /dev/null; then
 			i=$(subtract $i 1)
@@ -221,8 +221,8 @@ case "$1" in
 
 		lyrics "$url"
 		;;
-	*)
-		usage
-		;;
+#	*)
+#		usage
+#		;;
 
 esac	
