@@ -2,7 +2,7 @@
 ########################################
 # name: wyrics
 # desc: fetch lyrics by URL or query
-#       from lyrics.fandom.com
+#       from songlyrics.com
 # main: Jaidyn Ann
 #       <jadedctrl@teknik.io>
 # lisc: CC 0
@@ -71,9 +71,10 @@ function search {
 	local query="$1"
 	local query="$(echo "$query" | sed 's/ /+/g')"
 
-	gendl "https://lyrics.fandom.com/wiki/Special:Search?query=${query}" \
-	| sed '1,/Results/d' \
-	| grep "result-link" \
+	gendl "https://songlyrics.com/index.php?section=search&searchW=${query}" \
+	| sed '1,/serpresult/d' \
+	| grep "title=" \
+	| grep -v "<h3" \
 	| search_parse
 }
 
@@ -90,10 +91,10 @@ function search_parse {
 		i=$(add $i 1)
 		local url="$(echo "$line" \
 				| sed 's/.*href=\"//' \
-				| sed 's/\" class.*//')"
+				| sed 's/\".*//')"
 		local title="$(echo "$line" \
-				| sed 's%.*">%%' \
-				| sed 's%</a>%%')"
+				| sed 's%.*title="%%' \
+				| sed 's%".*%%')"
 
 		if echo "$title" | grep "http" > /dev/null; then
 			i=$(subtract $i 1)
@@ -181,15 +182,23 @@ function result_choose {
 
 # --------------------------------------
 
+function blank_lines {
+	local html="$(reade)"
+
+	echo "$html" \
+	| sed 's%^<br />%<p></p>%' \
+	| sed 's%^<br/>%<p></p>%' 
+}
+
 # STRING --> STRING
 # return the lyrics of a given URL
 function lyrics {
 	local url="$1"
 
 	gendl "$url" \
-	| grep "class=\'lyricbox" \
-	| sed 's/.*lyricbox.>//' \
-	| sed 's/;<div.*//' \
+	| sed '1,/iComment-text">/d' \
+	| sed '/<\/div>/,$d' \
+	| blank_lines \
 	| lynx -stdin -dump \
 	| sed 's/^   //g'
 }
@@ -221,8 +230,8 @@ case "$1" in
 
 		lyrics "$url"
 		;;
-#	*)
-#		usage
-#		;;
+# #	*)
+# #		usage
+# #		;;
 
 esac	

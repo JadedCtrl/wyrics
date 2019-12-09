@@ -2,8 +2,10 @@
 WYRICS                                                          Git some lyrics
 ===============================================================================
 
-Fetch lyrics for a song from lyrics.fandom.com with this script.
+Fetch lyrics for a song from songlyrics.com with this script.
 You can fetch them by search queries, or by their URL.
+
+This used to use lyrics.wikia.com, but that's defunct now. ;c
 
 
 
