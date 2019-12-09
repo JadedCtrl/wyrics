@@ -2,7 +2,7 @@
 WYRICS                                                          Git some lyrics
 ===============================================================================
 
-Fetch lyrics for a song from lyrics.wikia.com with this script.
+Fetch lyrics for a song from lyrics.fandom.com with this script.
 You can fetch them by search queries, or by their URL.
 
 
@@ -100,5 +100,5 @@ want to skip to the next song.
 BORING STUFF
 ----------------------------------------
 License is CC-0 (though, "gendl" is GPLv3)
-Author is Jenga Phoenix <jadedctrl@teknik.io>
+Author is Jaidyn Ann <jadedctrl@teknik.io>
 Sauce is at https://git.eunichx.us/wyrics.git

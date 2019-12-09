@@ -2,8 +2,8 @@
 ########################################
 # name: wyrics
 # desc: fetch lyrics by URL or query
-#       from lyrics.wikia.com
-# main: Jenga Phoenix
+#       from lyrics.fandom.com
+# main: Jaidyn Ann
 #       <jadedctrl@teknik.io>
 # lisc: CC 0
 ########################################
@@ -71,7 +71,7 @@ function search {
 	local query="$1"
 	local query="$(echo "$query" | sed 's/ /+/g')"
 
-	gendl "https://lyrics.wikia.com/wiki/Special:Search?query=${query}" \
+	gendl "https://lyrics.fandom.com/wiki/Special:Search?query=${query}" \
 	| sed '1,/Results/d' \
 	| grep "result-link" \
 	| search_parse
