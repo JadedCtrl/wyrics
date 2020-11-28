@@ -71,7 +71,7 @@ function search {
 	local query="$1"
 	local query="$(echo "$query" | sed 's/ /+/g')"
 
-	gendl "https://songlyrics.com/index.php?section=search&searchW=${query}" \
+	curl -Ls "https://songlyrics.com/index.php?section=search&searchW=${query}" \
 	| sed '1,/serpresult/d' \
 	| grep "title=" \
 	| grep -v "<h3" \
@@ -195,7 +195,7 @@ function blank_lines {
 function lyrics {
 	local url="$1"
 
-	gendl "$url" \
+	curl -Ls "$url" \
 	| sed '1,/iComment-text">/d' \
 	| sed '/<\/div>/,$d' \
 	| blank_lines \
