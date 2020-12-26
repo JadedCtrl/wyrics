@@ -13,19 +13,19 @@
 # Return a version of a filename suitable for making a
 # query. Replace "_" with spaces, get rid of file-ext.
 function query_name {
-	filename="$1"
-	suffix="$2"
+	local filename="$1"
+	local suffix="$2"
 
 	basename "$filename" ".$suffix" \
-	| sed 's/_/ /g'
+	| sed 's/_/ /g' \
+	| sed 's/ /%2a/g'
 }
 
 # STRING --> STRING
 # Return the name of a file's lyrics text-file.
 # Will be the full-name + .txt
 function text_name {
-	filename="$1"
-
+	local filename="$1"
 	echo "${filename}.txt"
 }
 
@@ -35,26 +35,25 @@ function text_name {
 # invocation
 
 function usage {
-	echo "usage: wydir file-ext [prefix]"
+	echo "usage: wydir artist file-ext"
 	echo "       'file-ext' should be the ext to songs in this dir"
-	echo "       'prefix'   should be a prefix (I.E., band-name) to"
-	echo "                  help make search-results more accurate."
-
+	echo "       'artist'   the songs' artist"
 	exit 2
 }
 
 # --------------------------------------
 
-SUFFIX="$1"
-PREFIX="$2"
+ARTIST="$1"
+SUFFIX="$2"
 
 if test -z "$SUFFIX"; then
 	usage
 fi
 
-for file in $(ls *.$1); do
-	echo "... $file ..."
-	lyrics="$(wyrics -s "$PREFIX $(query_name "$file" "$SUFFIX")")"
+for file in ./*.$SUFFIX; do
+	echo "... $(query_name "$file" "$SUFFIX") ..."
+	name="$(query_name "$file" "$SUFFIX")"
+	lyrics="$(wyrics "$ARTIST" "$name")"
 
 	if test -n "$lyrics"; then
 		echo "$lyrics" > "$(text_name "$file")"

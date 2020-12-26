@@ -2,63 +2,33 @@
 WYRICS                                                          Git some lyrics
 ===============================================================================
 
-Fetch lyrics for a song from songlyrics.com with this script.
-You can fetch them by search queries, or by their URL.
+Fetch lyrics for a song from lyrics.ovh with this script.
 
-This used to use lyrics.wikia.com, but that's defunct now. ;c
+This used to use songlyrics.com-- and before that, lyrics.wikia.com.
+songlyrics.com has more flexible searching (you could make typos), but it
+is a pretty slow site.
 
-
+lyrics.ovh is a good deal faster, but much more picky.
 
 ----------------------------------------
 PRE-REQUISITES
 ----------------------------------------
 You'll need:
-	* "gendl" in your $PATH
-	* a POSIX-compatible shell (tested with `pdksh` and `bash`)
-	* "curl", "wget", or "ftp" installed
-	* "lynx" installed
-
-
+	* curl
+	* a shell 
 
 ----------------------------------------
 USAGE
 ----------------------------------------
-
 WYRICS
 --------------------
 Just run "wyrics" like so:
 
-	wyrics -s "query"
-	wyrics -u page_url
-
-If you use the "-u" option, the lyrics will just be printed to stdout.
-
-If you decide to use "-s", though, search results'll be displayed to your
-screen (via stderr)-- each numbered from 1-10.
-Just type a number, hit enter, and the lyrics'll pop up.
-
-	$ wyrics -s "boston"
-	1       Boston
-	2       Sonny:We're Better Than Boston
-	3       Boston Manor:FY1
-	4       Boston Manor:Halo
-	5       Boston Manor:Wolf
-	6       Boston Manor:Stick Up
-	7       Boston Manor:If I Can't Have It No One Can
-	8       Boston Manor:Square One
-	9       Boston Manor:Driftwood
-	10      Boston Manor:Forget Me Not
-	>>
-
+	wyrics $ARTIST $SONG
 
 If you want to save lyrics to a file, you'll need to redirect the
-output-- "wyrics -s 'bob' > BOB.txt"
-
---------------------
-
-
-... however, I've also included some more scripts that'll help make wyrics
-and listening to music with lyrics more convenient:
+output--
+	$ wyrics "dream theater" "octavarium" > lyrics.txt
 
 
 WYDIR
@@ -68,39 +38,14 @@ The lyrics are output to "$song.txt"
 
 Just run "wydir" like so:
 
-	wydir file-ext [prefix]
+	wydir $ARTIST $FILE_EXTENSION
 
-file-ext        should be the file-extension of songs in the current dir.
-prefix          should be a prefix to search results to help make them
-                more accurate-- like, for example, the band-name, the
-                album, etc.
-
-This is really convenient if you wanna get the lyrics of an album in
-one go. =w=
-
-
-MP
---------------------
-MP is a font-end to the music-player MPV.
-What MP does, is that before a song is played, it tries to "cat" it's
-lyrics file (assumed to be like "song.ogg.txt"), then executes MPV.
-
-Since it executes MPV once for every song passed, you're probably wondering
-how you could seek back or forward a song.
-
-Normally you'd use "<" or ">", but with MP, just use CTRL-C and "Q".
-
-The escape-code of CTRL-C (4) is caught by MP, and interpreted to mean you
-wanna go back a song.
-
-The regular escape-code of "Q" (0) is caught, and interpreted to mean you
-want to skip to the next song.
-
+Convenient if you wanna get the lyrics of an album in one go. 
 
 
 ----------------------------------------
 BORING STUFF
 ----------------------------------------
-License is CC-0 (though, "gendl" is GPLv3)
+License is CC-0 
 Author is Jaidyn Ann <jadedctrl@teknik.io>
-Sauce is at https://git.eunichx.us/wyrics.git
+Sauce is at https://git.feneas.org/detruota/wyrics.git
