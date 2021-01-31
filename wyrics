@@ -22,13 +22,15 @@ function search {
 
 # sanitize search strings
 function sanitize {
-	local str="$(echo "$1" | sed 's/ /%2A/g')"
+	local str="$1"
 
-	if echo "$str" | grep ',the\.' >/dev/null; then
-		str="the%2A${str}"
+	if echo "$str" | grep ',the' >/dev/null; then
+		str="the%2A$(echo "$str" | sed 's%,the%%')"
 	fi
 
-	echo "$str"
+	echo "$str" \
+	| sed 's/ /%2A/g' \
+	| sed 's/_/%2A/g'
 }
 
 # --------------------------------------
