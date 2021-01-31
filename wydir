@@ -16,9 +16,7 @@ function query_name {
 	local filename="$1"
 	local suffix="$2"
 
-	basename "$filename" ".$suffix" \
-	| sed 's/_/ /g' \
-	| sed 's/ /%2a/g'
+	basename "$filename" ".$suffix"
 }
 
 # STRING --> STRING
